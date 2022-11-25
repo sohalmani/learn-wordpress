@@ -32,11 +32,7 @@
             <div class="page-links">
                 <h2 class="page-links__title"><?php the_title(); ?></h2>
                 <ul class="min-list">
-                    <?php wp_list_pages(array(
-                        "child_of" => get_the_ID(),
-                        "title_li" => null,
-                        "sort_column" => 'menu_order'
-                    )); ?>
+                    <?php wp_list_pages(array("child_of" => get_the_ID(), "title_li" => null, "sort_column" => 'menu_order')); ?>
                 </ul>
             </div>
         <?php endif; ?>
