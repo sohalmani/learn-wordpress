@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * Add theme support
+ * The 'add_theme_support()' function lets you enable certain features within WordPress
+ * The hook used to enable feature is 'after_setup_theme'
+ * @return void
+ */
+function fictional_university_support()
+{
+    add_theme_support('title-tag');
+}
+
+add_action('after_setup_theme', 'fictional_university_support');
+
 function fictional_university_assets()
 {
     wp_enqueue_style('google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
