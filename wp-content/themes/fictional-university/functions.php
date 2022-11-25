@@ -1,14 +1,11 @@
 <?php
 
-/**
- * Add theme support
- * The 'add_theme_support()' function lets you enable certain features within WordPress
- * The hook used to enable feature is 'after_setup_theme'
- * @return void
- */
 function fictional_university_support()
 {
     add_theme_support('title-tag');
+    register_nav_menu('header_main', 'Main Navigation in Header');
+    register_nav_menu('footer_explore', 'Explore Column in Footer');
+    register_nav_menu('footer_learn', 'Learn Column in Footer');
 }
 
 add_action('after_setup_theme', 'fictional_university_support');
