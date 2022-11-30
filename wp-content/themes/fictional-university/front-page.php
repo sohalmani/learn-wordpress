@@ -1,6 +1,13 @@
 <?php
 $event_posts = new WP_Query(array('posts_per_page' => 2, 'post_type' => 'event'));
 $blog_posts = new WP_Query(array("posts_per_page" => 2));
+
+function display_date($date = '', $format = 'd M Y')
+{
+	$new_date = new DateTime($date);
+	echo $new_date->format($format);
+}
+
 ?>
 
 <?php get_header(); ?>
@@ -22,10 +29,11 @@ $blog_posts = new WP_Query(array("posts_per_page" => 2));
             <div class="full-width-split__inner">
                 <h2 class="headline headline--small-plus t-center">Upcoming Events</h2>
 				<?php while ($event_posts->have_posts()): $event_posts->the_post(); ?>
+					<?php $event_date = get_field('event_date'); ?>
                     <div class="event-summary">
                         <a class="event-summary__date t-center" href="<?php the_permalink(); ?>">
-                            <span class="event-summary__month">Mar</span>
-                            <span class="event-summary__day">25</span>
+                            <span class="event-summary__month"><?php display_date($event_date, 'M'); ?></span>
+                            <span class="event-summary__day"><?php display_date($event_date, 'd'); ?></span>
                         </a>
                         <div class="event-summary__content">
                             <h5 class="event-summary__title headline headline--tiny">
@@ -44,7 +52,8 @@ $blog_posts = new WP_Query(array("posts_per_page" => 2));
 				<?php endwhile;
 				wp_reset_postdata(); ?>
 
-                <p class="t-center no-margin"><a href="<?php echo get_post_type_archive_link('event') ?>" class="btn btn--blue">View All
+                <p class="t-center no-margin"><a href="<?php echo get_post_type_archive_link('event') ?>"
+                                                 class="btn btn--blue">View All
                         Events</a></p>
             </div>
         </div>
