@@ -8,7 +8,7 @@
 
 function fictional_university_custom_post_types()
 {
-    register_post_type('event', array('has_archive' => true, 'labels' => array('name' => 'Events', 'all_items' => 'All Events', 'add_new_item' => 'Add New Event', 'edit_item' => 'Edit Event', 'singular' => 'Event',), 'menu_icon' => 'dashicons-calendar', 'public' => true, 'rewrite' => array('slug' => 'events')));
+    register_post_type('event', array('has_archive' => true, 'labels' => array('name' => 'Events', 'all_items' => 'All Events', 'add_new_item' => 'Add New Event', 'edit_item' => 'Edit Event', 'singular' => 'Event',), 'menu_icon' => 'dashicons-calendar', 'public' => true, 'rewrite' => array('slug' => 'events'), 'show_in_rest' => true, 'supports' => array('title', 'editor', 'excerpt')));
 }
 
 add_action('init', 'fictional_university_custom_post_types');
