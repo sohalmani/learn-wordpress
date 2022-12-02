@@ -12,11 +12,12 @@
     </div>
 
     <div class="container container--narrow page-section">
-        <?php while (have_posts()): the_post(); ?>
+		<?php while (have_posts()): the_post(); ?>
+			<?php $event_date = get_field('event_date'); ?>
             <div class="event-summary">
                 <a class="event-summary__date t-center" href="<?php the_permalink(); ?>">
-                    <span class="event-summary__month">Mar</span>
-                    <span class="event-summary__day">25</span>
+                    <span class="event-summary__month"><?php display_date($event_date, 'M'); ?></span>
+                    <span class="event-summary__day"><?php display_date($event_date, 'd'); ?></span>
                 </a>
                 <div class="event-summary__content">
                     <h5 class="event-summary__title headline headline--tiny">
@@ -27,8 +28,8 @@
                     </p>
                 </div>
             </div>
-        <?php endwhile; ?>
-        <?php echo paginate_links(); ?>
+		<?php endwhile; ?>
+		<?php echo paginate_links(); ?>
     </div>
 
 <?php get_footer();

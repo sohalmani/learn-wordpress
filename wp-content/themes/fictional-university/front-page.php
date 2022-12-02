@@ -1,13 +1,21 @@
 <?php
-$event_posts = new WP_Query(array('posts_per_page' => 2, 'post_type' => 'event'));
+$event_posts = new WP_Query(array(
+	'posts_per_page' => 2,
+	'post_type' => 'event',
+	'meta_key' => 'event_date',
+	'meta_query' => array(
+		array(
+			'key' => 'event_date',
+			'compare' => '>=',
+			'value' => date('Ymd'),
+			'type' => 'numeric',
+		),
+	),
+	'orderby' => 'meta_value_num',
+	'order' => 'ASC'
+));
+
 $blog_posts = new WP_Query(array("posts_per_page" => 2));
-
-function display_date($date = '', $format = 'd M Y')
-{
-	$new_date = new DateTime($date);
-	echo $new_date->format($format);
-}
-
 ?>
 
 <?php get_header(); ?>
