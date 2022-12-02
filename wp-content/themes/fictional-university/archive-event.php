@@ -30,6 +30,8 @@
             </div>
 		<?php endwhile; ?>
 		<?php echo paginate_links(); ?>
+        <hr class="section-break">
+        <p>Want to recap the older events? <a href="<?php echo site_url('past-events'); ?>">Check out the past events archive!</a></p>
     </div>
 
 <?php get_footer();
