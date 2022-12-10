@@ -4,6 +4,10 @@ function fictional_university_support()
 {
 	add_theme_support('title-tag');
 	add_theme_support('post-thumbnails');
+
+	add_image_size('professor-portrait', 480, 640, true);
+	add_image_size('professor-landscape', 400, 260, true);
+
 	register_nav_menu('header_main', 'Main Navigation in Header');
 	register_nav_menu('footer_explore', 'Explore Column in Footer');
 	register_nav_menu('footer_learn', 'Learn Column in Footer');

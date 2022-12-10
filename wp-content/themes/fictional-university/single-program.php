@@ -64,9 +64,14 @@ $related_upcoming_events = new WP_Query(array(
 		<?php if ($related_professors): ?>
             <hr class="section-break">
             <h2 class="headline headline--medium">Related Professor(s)</h2>
-            <ul>
+            <ul class="professor-cards">
 				<?php while ($related_professors->have_posts()): $related_professors->the_post(); ?>
-                    <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+                    <li class="professor-card__list-item">
+                        <a href="<?php the_permalink(); ?>" class="professor-card">
+                            <img class="professor-card__image" src="<?php the_post_thumbnail_url(); ?>" alt="">
+                            <span class="professor-card__name"><?php the_title(); ?></span>
+                        </a>
+                    </li>
 				<?php endwhile;
 				wp_reset_postdata(); ?>
             </ul>
