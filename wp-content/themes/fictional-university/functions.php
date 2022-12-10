@@ -7,6 +7,7 @@ function fictional_university_support()
 
 	add_image_size('professor-portrait', 480, 640, true);
 	add_image_size('professor-landscape', 400, 260, true);
+	add_image_size('page-banner', 1600, 480, true);
 
 	register_nav_menu('header_main', 'Main Navigation in Header');
 	register_nav_menu('footer_explore', 'Explore Column in Footer');

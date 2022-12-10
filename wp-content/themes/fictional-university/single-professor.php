@@ -1,4 +1,5 @@
 <?php
+$page_banner_background_image = get_field('page_banner_background_image');
 $related_programs = get_field('related_programs');
 ?>
 
@@ -7,12 +8,11 @@ $related_programs = get_field('related_programs');
 <?php while (have_posts()): the_post(); ?>
 	<div class="page-banner">
 		<div class="page-banner__bg-image"
-			 style="background-image: url(<?php echo get_theme_file_uri('images/ocean.jpg'); ?>)"></div>
+			 style="background-image: url(<?php echo $page_banner_background_image['sizes']['page-banner']; ?>)"></div>
 		<div class="page-banner__content container container--narrow">
 			<h1 class="page-banner__title"><?php the_title(); ?></h1>
 			<div class="page-banner__intro">
-				<!-- TODO: Add subtitle below using Custom Fields -->
-				<p>Remind me to edit this field later using Custom Fields.</p>
+				<p><?php the_field('page_banner_subtitle'); ?></p>
 			</div>
 		</div>
 	</div>
