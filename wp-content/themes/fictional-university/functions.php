@@ -38,13 +38,13 @@ function fictional_university_fetch_upcoming_events($query)
 	if (is_post_type_archive('event')) {
 		$query->set('meta_key', 'event_date');
 		$query->set('meta_query', array(
-				array(
-					'key' => 'event_date',
-					'compare' => '>=',
-					'value' => date('Ymd'),
-					'type' => 'numeric',
-				)
-			));
+			array(
+				'key' => 'event_date',
+				'compare' => '>=',
+				'value' => date('Ymd'),
+				'type' => 'numeric',
+			)
+		));
 		$query->set('orderby', 'meta_value_num');
 		$query->set('order', 'ASC');
 	}
@@ -62,4 +62,36 @@ function display_date($date = '', $format = 'd M Y')
 {
 	$new_date = new DateTime($date);
 	echo $new_date->format($format);
+}
+
+function page_banner($args = null)
+{
+	if (!$args['title']) {
+		$args['title'] = get_the_title();
+	}
+
+	if (!$args['subtitle']) {
+		$args['subtitle'] = get_field('page_banner_subtitle');
+	}
+
+	if (!$args['background_image']) {
+		if (get_field('page_banner_background_image')) {
+			$args['background_image'] = get_field('page_banner_background_image')['sizes']['page-banner'];
+		} else {
+			$args['background_image'] = get_theme_file_uri('/images/ocean.jpg');
+		}
+	}
+
+	?>
+	<div class="page-banner">
+		<div class="page-banner__bg-image"
+			 style="background-image: url(<?php echo $args['background_image']; ?>)"></div>
+		<div class="page-banner__content container container--narrow">
+			<h1 class="page-banner__title"><?php echo $args['title']; ?></h1>
+			<div class="page-banner__intro">
+				<p><?php echo $args['subtitle']; ?></p>
+			</div>
+		</div>
+	</div>
+	<?php
 }
