@@ -26,6 +26,8 @@ function wpse_custom_menu_order($menu_ord)
 		// Events
 		'edit.php?post_type=program',
 		// Programs
+		'edit.php?post_type=professor',
+		// Professors
 		'upload.php',
 		// Media
 		'edit.php?post_type=page',

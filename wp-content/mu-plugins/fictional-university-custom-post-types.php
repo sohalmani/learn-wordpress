@@ -47,6 +47,23 @@ function fictional_university_custom_post_types()
 			'editor',
 		),
 	));
+
+	register_post_type('professor', array(
+		'labels' => array(
+			'name' => 'Professors',
+			'all_items' => 'All Professors',
+			'add_new_item' => 'Add New Professors',
+			'edit_item' => 'Edit Professor',
+			'singular' => 'Professors',
+		),
+		'menu_icon' => 'dashicons-welcome-learn-more',
+		'public' => true,
+		'show_in_rest' => true,
+		'supports' => array(
+			'title',
+			'editor',
+		),
+	));
 }
 
 add_action('init', 'fictional_university_custom_post_types');
