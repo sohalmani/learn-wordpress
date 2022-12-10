@@ -3,6 +3,7 @@
 function fictional_university_support()
 {
 	add_theme_support('title-tag');
+	add_theme_support('post-thumbnails');
 	register_nav_menu('header_main', 'Main Navigation in Header');
 	register_nav_menu('footer_explore', 'Explore Column in Footer');
 	register_nav_menu('footer_learn', 'Learn Column in Footer');

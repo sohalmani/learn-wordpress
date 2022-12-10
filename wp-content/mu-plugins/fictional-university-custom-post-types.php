@@ -62,6 +62,7 @@ function fictional_university_custom_post_types()
 		'supports' => array(
 			'title',
 			'editor',
+			'thumbnail',
 		),
 	));
 }

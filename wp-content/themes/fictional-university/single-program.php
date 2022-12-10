@@ -1,4 +1,18 @@
 <?php
+$related_professors = new WP_Query(array(
+	'post_type' => 'professor',
+	'posts_per_page' => -1,
+	'meta_query' => array(
+		array(
+			'key' => 'related_programs',
+			'compare' => 'LIKE',
+			'value' => '"' . get_the_ID() . '"',
+		)
+	),
+	'orderby' => 'title',
+	'order' => 'ASC',
+));
+
 $related_upcoming_events = new WP_Query(array(
 	'post_type' => 'event',
 	'posts_per_page' => -1,
@@ -47,6 +61,16 @@ $related_upcoming_events = new WP_Query(array(
             </p>
         </div>
         <div class="generic-content"><?php the_content(); ?></div>
+		<?php if ($related_professors): ?>
+            <hr class="section-break">
+            <h2 class="headline headline--medium">Related Professor(s)</h2>
+            <ul>
+				<?php while ($related_professors->have_posts()): $related_professors->the_post(); ?>
+                    <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+				<?php endwhile;
+				wp_reset_postdata(); ?>
+            </ul>
+		<?php endif; ?>
 		<?php if ($related_upcoming_events): ?>
             <hr class="section-break">
             <h2 class="headline headline--medium">Upcoming Event(s)</h2>
