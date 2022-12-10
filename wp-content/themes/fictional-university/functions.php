@@ -25,7 +25,11 @@ add_action('wp_enqueue_scripts', 'fictional_university_assets');
 
 function fictional_university_fetch_upcoming_events($query)
 {
-	if (!is_admin() && is_post_type_archive('event') && $query->is_main_query()) {
+	if (is_admin() || !$query->is_main_query()) {
+		return false;
+	}
+
+	if (is_post_type_archive('event')) {
 		$query->set('meta_key', 'event_date');
 		$query->set('meta_query', array(
 				array(
@@ -36,6 +40,12 @@ function fictional_university_fetch_upcoming_events($query)
 				)
 			));
 		$query->set('orderby', 'meta_value_num');
+		$query->set('order', 'ASC');
+	}
+
+	if (is_post_type_archive('program')) {
+		$query->set('posts_per_page', -1);
+		$query->set('orderby', 'title');
 		$query->set('order', 'ASC');
 	}
 }

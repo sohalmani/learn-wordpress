@@ -28,6 +28,25 @@ function fictional_university_custom_post_types()
 			'custom-fields',
 		),
 	));
+
+	register_post_type('program', array(
+		'has_archive' => true,
+		'labels' => array(
+			'name' => 'Programs',
+			'all_items' => 'All Programs',
+			'add_new_item' => 'Add New Program',
+			'edit_item' => 'Edit Program',
+			'singular' => 'Program',
+		),
+		'menu_icon' => 'dashicons-awards',
+		'public' => true,
+		'rewrite' => array('slug' => 'programs'),
+		'show_in_rest' => true,
+		'supports' => array(
+			'title',
+			'editor',
+		),
+	));
 }
 
 add_action('init', 'fictional_university_custom_post_types');
