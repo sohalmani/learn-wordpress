@@ -66,8 +66,16 @@ class Search {
     }
 
     getResults() {
-        this.searchResultsContainer.html('This is our search results!');
-        this.isSpinnerVisible = false;
+        $.getJSON(`/wp-json/wp/v2/posts?search=${this.searchInput.val()}`, (posts) => {
+            this.searchResultsContainer.html(`
+                <h2 class="search-overlay__section-title">General Information</h2>
+                <ul class="link-list min-list">
+                    ${posts.map((post) => `<li><a href="${post.link}">${post.title.rendered}</a></li>`).join('')}
+                </ul>
+            `);
+
+            this.isSpinnerVisible = false;
+        });
     }
 }
 

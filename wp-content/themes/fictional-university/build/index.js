@@ -165,8 +165,15 @@ class Search {
     this.isOverlayOpen = false;
   }
   getResults() {
-    this.searchResultsContainer.html('This is our search results!');
-    this.isSpinnerVisible = false;
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().getJSON(`/wp-json/wp/v2/posts?search=${this.searchInput.val()}`, posts => {
+      this.searchResultsContainer.html(`
+                <h2 class="search-overlay__section-title">General Information</h2>
+                <ul class="link-list min-list">
+                    ${posts.map(post => `<li><a href="${post.link}">${post.title.rendered}</a></li>`).join('')}
+                </ul>
+            `);
+      this.isSpinnerVisible = false;
+    });
   }
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Search);
