@@ -116,8 +116,11 @@ class Search {
     this.closeButton = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.search-overlay__close');
     this.searchOverlay = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.search-overlay');
     this.searchInput = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#search-term');
+    this.searchResultsContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#search-overlay__results');
     this.isOverlayOpen = false;
     this.searchTimeout = null;
+    this.isSpinnerVisible = false;
+    this.previousSearchValue = '';
     this.bindEvents();
   }
   bindEvents() {
@@ -125,6 +128,30 @@ class Search {
     this.closeButton.on('click', this.closeOverlay.bind(this));
     this.searchInput.on('keydown', this.handleSearchInput.bind(this));
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).on('keydown', this.handleKeyUp.bind(this));
+  }
+  handleSearchInput(e) {
+    if (this.searchInput.val().trim() != this.previousSearchValue) {
+      clearTimeout(this.searchTimeout);
+      if (this.searchInput.val()) {
+        if (!this.isSpinnerVisible) {
+          this.searchResultsContainer.html('<div class="spinner-loader"></div>');
+          this.isSpinnerVisible = true;
+        }
+        this.searchTimeout = setTimeout(this.getResults.bind(this), 1000);
+      } else {
+        this.searchResultsContainer.empty();
+        this.isSpinnerVisible = false;
+      }
+    }
+    this.previousSearchValue = this.searchInput.val().trim();
+  }
+  handleKeyUp(e) {
+    if (e.keyCode === 83 && !this.isOverlayOpen && !jquery__WEBPACK_IMPORTED_MODULE_0___default()('input, textarea').is(':focus')) {
+      this.openOverlay();
+    }
+    if (e.keyCode === 27 && this.isOverlayOpen) {
+      this.closeOverlay();
+    }
   }
   openOverlay() {
     this.searchOverlay.toggleClass('search-overlay--active');
@@ -137,19 +164,9 @@ class Search {
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('body').removeClass('body-no-scroll');
     this.isOverlayOpen = false;
   }
-  handleSearchInput(e) {
-    clearTimeout(this.searchTimeout);
-    this.searchTimeout = setTimeout(function () {
-      console.log(e.target.value);
-    }, 2000);
-  }
-  handleKeyUp(e) {
-    if (e.keyCode === 83 && !this.isOverlayOpen && !jquery__WEBPACK_IMPORTED_MODULE_0___default()('input, textarea').is(':focus')) {
-      this.openOverlay();
-    }
-    if (e.keyCode === 27 && this.isOverlayOpen) {
-      this.closeOverlay();
-    }
+  getResults() {
+    this.searchResultsContainer.html('This is our search results!');
+    this.isSpinnerVisible = false;
   }
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Search);

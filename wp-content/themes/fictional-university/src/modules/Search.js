@@ -6,8 +6,12 @@ class Search {
         this.closeButton = $('.search-overlay__close');
         this.searchOverlay = $('.search-overlay');
         this.searchInput = $('#search-term');
+        this.searchResultsContainer = $('#search-overlay__results');
         this.isOverlayOpen = false;
         this.searchTimeout = null;
+        this.isSpinnerVisible = false;
+        this.previousSearchValue = '';
+
         this.bindEvents();
     }
 
@@ -16,6 +20,36 @@ class Search {
         this.closeButton.on('click', this.closeOverlay.bind(this))
         this.searchInput.on('keydown', this.handleSearchInput.bind(this));
         $(document).on('keydown', this.handleKeyUp.bind(this));
+    }
+
+    handleSearchInput(e) {
+        if (this.searchInput.val().trim() != this.previousSearchValue) {
+            clearTimeout(this.searchTimeout);
+
+            if (this.searchInput.val()) {
+                if (!this.isSpinnerVisible) {
+                    this.searchResultsContainer.html('<div class="spinner-loader"></div>');
+                    this.isSpinnerVisible = true;
+                }
+
+                this.searchTimeout = setTimeout(this.getResults.bind(this), 1000);
+            } else {
+                this.searchResultsContainer.empty();
+                this.isSpinnerVisible = false;
+            }
+        }
+
+        this.previousSearchValue = this.searchInput.val().trim();
+    }
+
+    handleKeyUp(e) {
+        if (e.keyCode === 83 && !this.isOverlayOpen && !$('input, textarea').is(':focus')) {
+            this.openOverlay();
+        }
+
+        if (e.keyCode === 27 && this.isOverlayOpen) {
+            this.closeOverlay();
+        }
     }
 
     openOverlay() {
@@ -31,22 +65,9 @@ class Search {
         this.isOverlayOpen = false;
     }
 
-    handleSearchInput(e) {
-        clearTimeout(this.searchTimeout);
-
-        this.searchTimeout = setTimeout(function () {
-            console.log(e.target.value);
-        }, 2000);
-    }
-
-    handleKeyUp(e) {
-        if (e.keyCode === 83 && !this.isOverlayOpen && !$('input, textarea').is(':focus')) {
-            this.openOverlay();
-        }
-
-        if (e.keyCode === 27 && this.isOverlayOpen) {
-            this.closeOverlay();
-        }
+    getResults() {
+        this.searchResultsContainer.html('This is our search results!');
+        this.isSpinnerVisible = false;
     }
 }
 
