@@ -25,6 +25,10 @@ function fictional_university_assets()
 	wp_enqueue_style('fictional-university-style-index', get_theme_file_uri('build/style-index.css'));
 	wp_enqueue_script('fictional-university-index', get_theme_file_uri('/build/index.js'), array('jquery'), '1.0',
 		true);
+
+    wp_localize_script('fictional-university-index', 'FictionalUniversityData', array(
+        'rootUrl' => get_site_url()
+    ));
 }
 
 add_action('wp_enqueue_scripts', 'fictional_university_assets');
