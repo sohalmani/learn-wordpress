@@ -97,7 +97,10 @@ class Search {
                 <h2 class="search-overlay__section-title">General Information</h2>
                 ${combinedResults.length ? `
                     <ul class="link-list min-list">
-                        ${combinedResults.map((result) => `<li><a href="${result.link}">${result.title.rendered}</a></li>`).join('')}
+                        ${combinedResults.map((result) => `<li>
+                            <a href="${result.link}">${result.title.rendered}</a>
+                            ${result.type === 'post' ? ` by ${result.author_name}` : ``}
+                        </li>`).join('')}
                     </ul>
                 ` : `
                     <p>No Results Found</p>

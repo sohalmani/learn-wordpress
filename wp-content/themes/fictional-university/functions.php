@@ -99,3 +99,13 @@ function page_banner($args = null)
 	</div>
 	<?php
 }
+
+function add_author_field() {
+    register_rest_field('post', 'author_name', array(
+        'get_callback' => function () {
+            return get_the_author();
+        }
+    ));
+}
+
+add_action('rest_api_init', 'add_author_field');
