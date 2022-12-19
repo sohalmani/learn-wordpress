@@ -1,5 +1,7 @@
 <?php
 
+require get_theme_file_path('/inc/search-route.php');
+
 function fictional_university_support()
 {
 	add_theme_support('title-tag');
