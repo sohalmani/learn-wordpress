@@ -64,10 +64,15 @@ function fictional_university_fetch_upcoming_events($query)
 
 add_action('pre_get_posts', 'fictional_university_fetch_upcoming_events');
 
+function get_date($date = '', $format = 'd M Y')
+{
+    $new_date = new DateTime($date);
+    return $new_date->format($format);
+}
+
 function display_date($date = '', $format = 'd M Y')
 {
-	$new_date = new DateTime($date);
-	echo $new_date->format($format);
+	echo get_date($date, $format);
 }
 
 function page_banner($args = null)

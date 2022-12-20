@@ -87,29 +87,82 @@ class Search {
     }
 
     getResults() {
-        $.when(
-            $.getJSON(`${FictionalUniversityData.rootUrl}/wp-json/wp/v2/posts?search=${this.searchInput.val()}`),
-            $.getJSON(`${FictionalUniversityData.rootUrl}/wp-json/wp/v2/pages?search=${this.searchInput.val()}`)
-        ).then((posts, pages) => {
-            const combinedResults = posts[0].concat(pages[0]);
-
+        $.getJSON(`${FictionalUniversityData.rootUrl}/wp-json/university/v1/search?term=${this.searchInput.val()}`, (results) => {
+            //language=HTML
             this.searchResultsContainer.html(`
-                <h2 class="search-overlay__section-title">General Information</h2>
-                ${combinedResults.length ? `
-                    <ul class="link-list min-list">
-                        ${combinedResults.map((result) => `<li>
-                            <a href="${result.link}">${result.title.rendered}</a>
-                            ${result.type === 'post' ? ` by ${result.author_name}` : ``}
-                        </li>`).join('')}
-                    </ul>
-                ` : `
-                    <p>No Results Found</p>
-                `}
+                <div class="row">
+                    <div class="one-third">
+                        <h2 class="search-overlay__section-title">General Information</h2>
+                        ${results.general_info.length ? `
+                        <ul class="link-list min-list">
+                            ${results.general_info.map((result) => `
+                            <li>
+                                <a href="${result.permalink}">${result.title}</a>
+                                ${result.postType === 'post' ? ` by ${result.author_name}` : ``}
+                            </li>`).join('')}
+                        </ul>
+                        ` : `
+                        <p>No General Information is available</p>
+                        `}
+                    </div>
+                    <div class="one-third">
+                        <h2 class="search-overlay__section-title">Programs</h2>
+                        ${results.programs.length ? `
+                        <ul class="link-list min-list">
+                            ${results.programs.map((result) => `
+                            <li>
+                                <a href="${result.permalink}">${result.title}</a>
+                            </li>`).join('')}
+                        </ul>
+                        ` : `
+                        <p>No Programs available</p>
+                        `}
+                        <h2 class="search-overlay__section-title">Professors</h2>
+                        ${results.professors.length ? `
+                        <ul class="link-list min-list">
+                            ${results.professors.map((result) => `
+                            <li class="professor-card__list-item">
+                                <a href="${result.permalink}" class="professor-card">
+                                    <img class="professor-card__image" src="${result.image}" alt="${result.title}">
+                                    <span class="professor-card__name">${result.title}</span>
+                                </a>
+                            </li>`).join('')}
+                        </ul>
+                        ` : `
+                        <p>No Professors found</p>
+                        `}
+                    </div>
+                    <div class="one-third">
+                        <h2 class="search-overlay__section-title">Events</h2>
+                        ${results.events.length ? `
+                        <ul class="link-list min-list">
+                            ${results.events.map((result) => `
+                            <li>
+                                <div class="event-summary">
+                                    <a class="event-summary__date t-center" href="${result.permalink}">
+                                        <span class="event-summary__month">${result.month}</span>
+                                        <span class="event-summary__day">${result.day}</span>
+                                    </a>
+                                    <div class="event-summary__content">
+                                        <h5 class="event-summary__title headline headline--tiny">
+                                            <a href="${result.permalink}">${result.title}</a>
+                                        </h5>
+                                        <p>
+                                            ${result.description}
+                                            <a href="${result.permalink}" class="nu gray">Learn more</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>`).join('')}
+                        </ul>
+                        ` : `
+                        <p>No Events found</p>
+                        `}
+                    </div>
+                </div>
             `);
 
             this.isSpinnerVisible = false;
-        }, () => {
-            this.searchResultsContainer.html(`<p>Unexpected Error occured! Please contact support.</p>`);
         });
     }
 }
