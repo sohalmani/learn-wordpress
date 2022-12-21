@@ -177,6 +177,7 @@ class Search {
     this.searchInput.val('');
     setTimeout(() => this.searchInput.focus(), 400);
     this.isOverlayOpen = true;
+    return false;
   }
   closeOverlay() {
     this.searchOverlay.removeClass('search-overlay--active');
