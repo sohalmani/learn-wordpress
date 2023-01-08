@@ -28,6 +28,8 @@ function wpse_custom_menu_order($menu_ord)
 		// Programs
 		'edit.php?post_type=professor',
 		// Professors
+		'edit.php?post_type=note',
+		// Notes
 		'upload.php',
 		// Media
 		'edit.php?post_type=page',
