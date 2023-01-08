@@ -127,7 +127,7 @@ function redirect_subscribers_to_home() {
     }
 }
 
-add_action('admin_init', redirect_subscribers_to_home);
+add_action('admin_init', 'redirect_subscribers_to_home');
 
 function remove_admin_bar_for_subscribers() {
     $theCurrentUser = wp_get_current_user();
@@ -137,7 +137,7 @@ function remove_admin_bar_for_subscribers() {
     }
 }
 
-add_action('wp_loaded', remove_admin_bar_for_subscribers);
+add_action('wp_loaded', 'remove_admin_bar_for_subscribers');
 
 function load_fictional_university_assets()
 {
@@ -148,16 +148,26 @@ function load_fictional_university_assets()
     wp_enqueue_style('fictional-university-index', get_theme_file_uri('build/index.css'));
 }
 
-add_action('login_enqueue_scripts', load_fictional_university_assets);
+add_action('login_enqueue_scripts', 'load_fictional_university_assets');
 
 function set_login_title() {
     return get_bloginfo('name');
 }
 
-add_filter('login_headertitle', set_login_title);
+add_filter('login_headertitle', 'set_login_title');
 
 function set_login_title_url() {
     return esc_url(site_url('/'));
 }
 
-add_filter('login_headerurl', set_login_title_url);
+add_filter('login_headerurl', 'set_login_title_url');
+
+function set_note_posts_private($data) {
+    if ($data['post_type'] === 'note' && $data['post_status'] !== 'trash') {
+        $data['post_status'] = 'private';
+    }
+
+    return $data;
+}
+
+add_filter('wp_insert_post_data', 'set_note_posts_private');

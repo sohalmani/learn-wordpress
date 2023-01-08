@@ -69,8 +69,8 @@ function fictional_university_custom_post_types()
 	));
 
 	register_post_type('note', array(
-//		'capability_type' => 'note',
-//		'map_meta_cap' => true,
+		'capability_type' => 'note',
+		'map_meta_cap' => true,
 		'labels' => array(
 			'name' => 'Notes',
 			'all_items' => 'All Notes',
