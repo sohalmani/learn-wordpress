@@ -19,6 +19,13 @@ $thisAuthorNotes = new WP_Query(array(
     <?php page_banner(); ?>
 
     <div class="container container--narrow page-section">
+        <div class="create-note">
+            <h2 class="headline headline--medium">Create New Note</h2>
+            <input type="text" class="new-note-title" placeholder="Title">
+            <textarea class="new-note-body" placeholder="Your note here..."></textarea>
+            <span class="submit-note">Create Note</span>
+        </div>
+        <hr class="section-break">
         <?php if($thisAuthorNotes->have_posts()): ?>
             <ul class="min-list link-lis" id="my-notes">
                 <?php while($thisAuthorNotes->have_posts()): $thisAuthorNotes->the_post(); ?>
