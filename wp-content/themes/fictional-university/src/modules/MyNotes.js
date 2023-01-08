@@ -36,8 +36,11 @@ class MyNotes {
                     <span class="update-note btn btn--blue btn--small"><i class="fa fa-arrow-right" aria-hidden="true"></i> Save</span>
                 </li>
             `).prependTo('#my-notes').hide().slideDown();
-        }).fail((message) => {
-            console.log('Oops!', message);
+        }).fail((response) => {
+            console.log('Oops!', response);
+            if (response.responseText === 'Note Limit Exceed') {
+                $('.note-limit-message').addClass('active');
+            }
         });
     }
 
@@ -67,8 +70,8 @@ class MyNotes {
         }).done((response) => {
             console.log('Yay!', response);
             this.makeNoteReadOnly(thisNote);
-        }).fail((message) => {
-            console.log('Oops!', message);
+        }).fail((response) => {
+            console.log('Oops!', response);
         });
     }
 
@@ -83,11 +86,14 @@ class MyNotes {
             },
         }).done((response) => {
             console.log('Yay!', response);
+            if (response.count_users_notes < 5) {
+                $('.note-limit-message').removeClass('active');
+            }
             thisNote.slideUp(function () {
                 thisNote.remove();
             });
-        }).fail((message) => {
-            console.log('Oops!', message);
+        }).fail((response) => {
+            console.log('Oops!', response);
         });
     }
 

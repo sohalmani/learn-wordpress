@@ -108,15 +108,21 @@ function page_banner($args = null)
 	<?php
 }
 
-function add_author_field_in_rest_api() {
+function add_custom_data_to_rest_api() {
     register_rest_field('post', 'author_name', array(
         'get_callback' => function () {
             return get_the_author();
         }
     ));
+
+    register_rest_field('note', 'count_users_notes', array(
+        'get_callback' => function () {
+            return count_user_posts(get_current_user_id(), 'note');
+        }
+    ));
 }
 
-add_action('rest_api_init', 'add_author_field_in_rest_api');
+add_action('rest_api_init', 'add_custom_data_to_rest_api');
 
 function redirect_subscribers_to_home() {
     $theCurrentUser = wp_get_current_user();
@@ -162,12 +168,21 @@ function set_login_title_url() {
 
 add_filter('login_headerurl', 'set_login_title_url');
 
-function set_note_posts_private($data) {
-    if ($data['post_type'] === 'note' && $data['post_status'] !== 'trash') {
-        $data['post_status'] = 'private';
+function set_note_posts_private($data, $postarr) {
+    if ($data['post_type'] === 'note') {
+        if (count_user_posts(get_current_user_id(), 'note') > 4 && !$postarr['ID']) {
+            die('Note Limit Exceed');
+        }
+
+        $data['post_title'] = sanitize_text_field($data['post_title']);
+        $data['post_content'] = sanitize_textarea_field($data['post_content']);
+
+        if ($data['post_status'] !== 'trash') {
+            $data['post_status'] = 'private';
+        }
     }
 
     return $data;
 }
 
-add_filter('wp_insert_post_data', 'set_note_posts_private');
+add_filter('wp_insert_post_data', 'set_note_posts_private', 10, 2);

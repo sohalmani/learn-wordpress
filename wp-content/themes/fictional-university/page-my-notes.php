@@ -24,6 +24,7 @@ $thisAuthorNotes = new WP_Query(array(
             <input type="text" class="new-note-title" placeholder="Title">
             <textarea class="new-note-body" placeholder="Your note here..."></textarea>
             <span class="submit-note">Create Note</span>
+            <span class="note-limit-message">You have reached your notes limit. Please delete some notes to create room for new ones.</span>
         </div>
         <hr class="section-break" />
         <ul class="min-list link-lis" id="my-notes">

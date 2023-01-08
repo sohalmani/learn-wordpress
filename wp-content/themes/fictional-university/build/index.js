@@ -147,8 +147,11 @@ class MyNotes {
                     <span class="update-note btn btn--blue btn--small"><i class="fa fa-arrow-right" aria-hidden="true"></i> Save</span>
                 </li>
             `).prependTo('#my-notes').hide().slideDown();
-    }).fail(message => {
-      console.log('Oops!', message);
+    }).fail(response => {
+      console.log('Oops!', response);
+      if (response.responseText === 'Note Limit Exceed') {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.note-limit-message').addClass('active');
+      }
     });
   }
   editNote(e) {
@@ -174,8 +177,8 @@ class MyNotes {
     }).done(response => {
       console.log('Yay!', response);
       this.makeNoteReadOnly(thisNote);
-    }).fail(message => {
-      console.log('Oops!', message);
+    }).fail(response => {
+      console.log('Oops!', response);
     });
   }
   deleteNote(e) {
@@ -188,11 +191,14 @@ class MyNotes {
       }
     }).done(response => {
       console.log('Yay!', response);
+      if (response.count_users_notes < 5) {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.note-limit-message').removeClass('active');
+      }
       thisNote.slideUp(function () {
         thisNote.remove();
       });
-    }).fail(message => {
-      console.log('Oops!', message);
+    }).fail(response => {
+      console.log('Oops!', response);
     });
   }
   makeNoteEditable(thisNote) {
