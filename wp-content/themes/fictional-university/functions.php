@@ -116,3 +116,24 @@ function add_author_field_in_rest_api() {
 }
 
 add_action('rest_api_init', 'add_author_field_in_rest_api');
+
+function redirectSubscribersToHome() {
+    $theCurrentUser = wp_get_current_user();
+
+    if (count($theCurrentUser->roles) == 1 && $theCurrentUser->roles[0] == 'subscriber') {
+        wp_redirect(site_url('/'));
+        exit;
+    }
+}
+
+add_action('admin_init', redirectSubscribersToHome);
+
+function removeAdminBarForSubscribers() {
+    $theCurrentUser = wp_get_current_user();
+
+    if (count($theCurrentUser->roles) == 1 && $theCurrentUser->roles[0] == 'subscriber') {
+        show_admin_bar(false);
+    }
+}
+
+add_action('wp_loaded', removeAdminBarForSubscribers);
