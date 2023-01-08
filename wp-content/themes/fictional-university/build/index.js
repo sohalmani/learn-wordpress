@@ -118,7 +118,28 @@ class MyNotes {
     this.bindEvents();
   }
   bindEvents() {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('.edit-note').on('click', this.editNote.bind(this));
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('.delete-note').on('click', this.deleteNote.bind(this));
+  }
+  makeNoteEditable(thisNote) {
+    thisNote.data('state', 'editable');
+    thisNote.find('.edit-note').html('<i class="fa fa-times" aria-hidden="true"></i> Cancel');
+    thisNote.find('.note-title-field, .note-body-field').removeAttr('readonly').addClass('note-active-field');
+    thisNote.find('.update-note').addClass('update-note--visible');
+  }
+  makeNoteReadOnly(thisNote) {
+    thisNote.data('state', 'readonly');
+    thisNote.find('.edit-note').html('<i class="fa fa-pencil" aria-hidden="true"></i> Edit');
+    thisNote.find('.note-title-field, .note-body-field').attr('readonly', 'readonly').removeClass('note-active-field');
+    thisNote.find('.update-note').removeClass('update-note--visible');
+  }
+  editNote(e) {
+    const thisNote = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('li');
+    if (thisNote.data('state') !== 'editable') {
+      this.makeNoteEditable(thisNote);
+    } else {
+      this.makeNoteReadOnly(thisNote);
+    }
   }
   deleteNote(e) {
     const thisNote = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('li');
