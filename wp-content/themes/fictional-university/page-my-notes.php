@@ -22,7 +22,7 @@ $thisAuthorNotes = new WP_Query(array(
         <?php if($thisAuthorNotes->have_posts()): ?>
             <ul class="min-list link-lis" id="my-notes">
                 <?php while($thisAuthorNotes->have_posts()): $thisAuthorNotes->the_post(); ?>
-                    <li>
+                    <li data-id="<?php the_ID(); ?>">
                         <input type="text" class="note-title-field" value="<?php echo esc_attr(get_the_title()); ?>">
                         <span class="edit-note"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span>
                         <span class="delete-note"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</span>

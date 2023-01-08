@@ -29,7 +29,8 @@ function fictional_university_assets()
 		true);
 
     wp_localize_script('fictional-university-index', 'FictionalUniversityData', array(
-        'rootUrl' => get_site_url()
+        'rootUrl' => get_site_url(),
+        'nonce' => wp_create_nonce('wp_rest'),
     ));
 }
 
