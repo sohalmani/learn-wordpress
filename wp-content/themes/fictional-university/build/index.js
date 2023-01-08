@@ -119,6 +119,7 @@ class MyNotes {
   }
   bindEvents() {
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('.edit-note').on('click', this.editNote.bind(this));
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('.update-note').on('click', this.updateNote.bind(this));
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('.delete-note').on('click', this.deleteNote.bind(this));
   }
   makeNoteEditable(thisNote) {
@@ -140,6 +141,25 @@ class MyNotes {
     } else {
       this.makeNoteReadOnly(thisNote);
     }
+  }
+  updateNote(e) {
+    const thisNote = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('li');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+      url: `${FictionalUniversityData.rootUrl}/wp-json/wp/v2/note/${thisNote.data('id')}`,
+      type: 'POST',
+      beforeSend: xhr => {
+        xhr.setRequestHeader('X-WP-Nonce', FictionalUniversityData.nonce);
+      },
+      data: {
+        'title': thisNote.find('.note-title-field').val(),
+        'content': thisNote.find('.note-body-field').val()
+      }
+    }).done(response => {
+      console.log('Yay!', response);
+      this.makeNoteReadOnly(thisNote);
+    }).fail(message => {
+      console.log('Oops!', message);
+    });
   }
   deleteNote(e) {
     const thisNote = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).closest('li');

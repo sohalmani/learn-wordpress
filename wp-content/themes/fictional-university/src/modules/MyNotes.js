@@ -7,6 +7,7 @@ class MyNotes {
 
     bindEvents() {
         $('.edit-note').on('click', this.editNote.bind(this));
+        $('.update-note').on('click', this.updateNote.bind(this));
         $('.delete-note').on('click', this.deleteNote.bind(this));
     }
 
@@ -32,6 +33,27 @@ class MyNotes {
         } else {
             this.makeNoteReadOnly(thisNote);
         }
+    }
+
+    updateNote(e) {
+        const thisNote = $(e.target).closest('li');
+
+        $.ajax({
+            url: `${FictionalUniversityData.rootUrl}/wp-json/wp/v2/note/${thisNote.data('id')}`,
+            type: 'POST',
+            beforeSend: (xhr) => {
+                xhr.setRequestHeader('X-WP-Nonce', FictionalUniversityData.nonce);
+            },
+            data: {
+                'title': thisNote.find('.note-title-field').val(),
+                'content': thisNote.find('.note-body-field').val(),
+            }
+        }).done((response) => {
+            console.log('Yay!', response);
+            this.makeNoteReadOnly(thisNote);
+        }).fail((message) => {
+            console.log('Oops!', message);
+        });
     }
 
     deleteNote(e) {
