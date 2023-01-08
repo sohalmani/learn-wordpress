@@ -117,7 +117,7 @@ function add_author_field_in_rest_api() {
 
 add_action('rest_api_init', 'add_author_field_in_rest_api');
 
-function redirectSubscribersToHome() {
+function redirect_subscribers_to_home() {
     $theCurrentUser = wp_get_current_user();
 
     if (count($theCurrentUser->roles) == 1 && $theCurrentUser->roles[0] == 'subscriber') {
@@ -126,9 +126,9 @@ function redirectSubscribersToHome() {
     }
 }
 
-add_action('admin_init', redirectSubscribersToHome);
+add_action('admin_init', redirect_subscribers_to_home);
 
-function removeAdminBarForSubscribers() {
+function remove_admin_bar_for_subscribers() {
     $theCurrentUser = wp_get_current_user();
 
     if (count($theCurrentUser->roles) == 1 && $theCurrentUser->roles[0] == 'subscriber') {
@@ -136,7 +136,7 @@ function removeAdminBarForSubscribers() {
     }
 }
 
-add_action('wp_loaded', removeAdminBarForSubscribers);
+add_action('wp_loaded', remove_admin_bar_for_subscribers);
 
 function load_fictional_university_assets()
 {
@@ -149,14 +149,14 @@ function load_fictional_university_assets()
 
 add_action('login_enqueue_scripts', load_fictional_university_assets);
 
-function setLoginTitle() {
+function set_login_title() {
     return get_bloginfo('name');
 }
 
-add_filter('login_headertitle', setLoginTitle);
+add_filter('login_headertitle', set_login_title);
 
-function setLoginTitleUrl() {
+function set_login_title_url() {
     return esc_url(site_url('/'));
 }
 
-add_filter('login_headerurl', setLoginTitleUrl);
+add_filter('login_headerurl', set_login_title_url);
