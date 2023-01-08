@@ -9,6 +9,8 @@
 function fictional_university_custom_post_types()
 {
 	register_post_type('event', array(
+		'capability_type' => 'event',
+		'map_meta_cap' => true,
 		'has_archive' => true,
 		'labels' => array(
 			'name' => 'Events',

@@ -107,7 +107,7 @@ function page_banner($args = null)
 	<?php
 }
 
-function add_author_field() {
+function add_author_field_in_rest_api() {
     register_rest_field('post', 'author_name', array(
         'get_callback' => function () {
             return get_the_author();
@@ -115,4 +115,4 @@ function add_author_field() {
     ));
 }
 
-add_action('rest_api_init', 'add_author_field');
+add_action('rest_api_init', 'add_author_field_in_rest_api');
